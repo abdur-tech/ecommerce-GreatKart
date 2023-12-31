@@ -1,1 +1,4 @@
 venv/
+greatkart/__pycache__/
+greatkart/static/
+static/

@@ -2,3 +2,4 @@ venv/
 greatkart/greatkart/__pycache__/
 greatkart/static/
 static/
+greatkart/category/__pycache__

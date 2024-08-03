@@ -7,6 +7,7 @@ from .models import Order, Payment, OrderProduct
 from store.models import Product
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
+from django.contrib import messages
 import datetime
 import json
 # Create your views here.
@@ -105,6 +106,7 @@ def place_order(request, total=0, quantity=0,):
             data.order_total = grand_total
             data.tax = tax
             data.ip = request.META.get('REMOTE_ADDR')
+            
             data.save()
             # Generate order number
             yr = int(datetime.date.today().strftime('%Y'))
@@ -124,7 +126,11 @@ def place_order(request, total=0, quantity=0,):
                 'tax': tax,
                 'grand_total': grand_total,
             }
+
             return render(request, 'orders/payment.html', context)
+        else:
+            messages.error(request, form.errors)
+            return redirect('checkout')
     else:
         return redirect('checkout')
     

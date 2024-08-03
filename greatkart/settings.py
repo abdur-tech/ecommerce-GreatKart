@@ -87,15 +87,15 @@ AUTH_USER_MODEL = 'accounts.Account'
 # Database Configuration
 
 #For Local
-DATABASES = {
+"""DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
-    }
+    }"""
 #Vercel Database
 
-"""DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': "verceldb",
@@ -104,7 +104,7 @@ DATABASES = {
         'HOST': "ep-blue-sun-a4oome0g-pooler.us-east-1.aws.neon.tech",
         'PORT': "5432",
     }
-}"""
+}
 
 
 # Password validation

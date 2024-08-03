@@ -1,0 +1,36 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "greatkart/wsgi.py",
+        "use": "@vercel/python",
+        "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
+      },
+      {
+        "src": "build_files.sh",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": "staticfiles_build"
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/static/(.*)",
+        "dest": "/static/$1"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "greatkart/wsgi.py"
+      }
+    ],
+    "env": {
+        "SECRET_KEY":"django-insecure-%xq(j&&30a-b21ru#uw=jabta5@b8=1ux)pxr*9&x+47-0v2*^",
+        "DEBUG":"True",
+        "EMAIL_HOST":"smtp.gmail.com",
+        "EMAIL_PORT":587,
+        "EMAIL_HOST_USER":"tempnoor1622@gmail.com",
+        "EMAIL_HOST_PASSWORD":"ivgb yvju ihkv fadh",
+        "EMAIL_USE_TLS":"Yes"
+    }
+  }

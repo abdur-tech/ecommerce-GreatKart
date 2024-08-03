@@ -86,11 +86,6 @@ def login(request):
                         existing_variation = item.variations.all()
                         ex_var_list.append(list(existing_variation))
                         id.append(item.id)
-
-                    # product_variation = [1, 2, 3, 4, 6]
-                    # ex_var_list = [4, 6, 3, 5]
-                    print(product_variation)
-                    print(ex_var_list)
                     for pr in product_variation:
                         if pr in ex_var_list:
                             index = ex_var_list.index(pr)
@@ -108,7 +103,6 @@ def login(request):
                 pass
             auth.login(request, user)
             messages.success(request, 'You are now logged in.')
-            
             url = request.META.get('HTTP_REFERER')
             try:
                 query = requests.utils.urlparse(url).query
@@ -146,15 +140,18 @@ def logout(request):
 
 @login_required(login_url = 'login')
 def dashboard(request):
-    orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
-    orders_count = orders.count()
-    userprofile = UserProfile.objects.get(user_id = request.user.id)
-    context = {
-        'orders_count': orders_count,
-        'userprofile': userprofile,
-    }
-    return render(request, 'accounts/dashboard.html', context)
-
+    try:
+        orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
+        orders_count = orders.count()
+        userprofile = UserProfile.objects.get(user_id = request.user.id)
+        context = {
+            'orders_count': orders_count,
+            'userprofile': userprofile,
+        }
+        return render(request, 'accounts/dashboard.html', context)
+    except UserProfile.DoesNotExist:
+        messages.error(request, 'Register before login')
+        return redirect('register')
 def forgetPassword(request):
     if request.method == 'POST':
         email = request.POST['email']
